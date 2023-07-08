@@ -5,8 +5,6 @@ import Navbar from './components/Navbar.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logoPNG.png" width="125" height="125" />
-
     <div class="wrapper">
       <Navbar msg="Name who login" />
     </div>
