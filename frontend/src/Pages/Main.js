@@ -79,6 +79,8 @@
 
 
 import React, { useState } from 'react';
+// const baseUrl = process.env.REACT_APP_BASE_URL;
+const baseUrl = "http://127.0.0.1:5000/upload"
 
 function FileUpload() {
   const [file1, setFile1] = useState(null);
@@ -97,8 +99,12 @@ function FileUpload() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!file1 || !file2) {
-      console.log('Please select two PDF files.');
+    if (file1 === null || !(file1.type === 'application/pdf')) {
+      alert('Please select two PDF files1.');
+      return;
+    }
+    if (file2 === null || !(file2.type === 'application/pdf')) {
+      alert('Please select two PDF files2.');
       return;
     }
 
@@ -107,7 +113,7 @@ function FileUpload() {
     formData.append('file2', file2);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/upload', {
+      const response = await fetch(baseUrl, {
         method: 'POST',
         body: formData,
       });

@@ -8,6 +8,9 @@ import Navbar from './components/Navbar';
 import { Home } from './Pages/Home';
 import Main from './Pages/Main';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 function App() {
   return (
