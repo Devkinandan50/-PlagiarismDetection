@@ -112,7 +112,7 @@ function FileUpload() {
     formData.append('file2', file2);
 
     try {
-      const response = await fetch(baseUrl, {
+      const response = await fetch(baseUrl + "/upload", {
         method: 'POST',
         body: formData,
       });
