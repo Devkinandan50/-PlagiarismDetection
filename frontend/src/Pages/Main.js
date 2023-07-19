@@ -1,5 +1,4 @@
 // import React, { useContext, useEffect, useState} from 'react'
-// import { getDocument } from 'pdfjs-dist';
 
 // const Main = () => { 
 //     const [pdfFile1, setPdfFile1] = useState(null);
@@ -7,51 +6,29 @@
 //     const [validationError, setValidationError] = useState('');
 
 
-// const handleFileChange = async (event) => {
-//   const file = event.target.files[0];
-
-//   try {
-//     const url = URL.createObjectURL(file);
-//     const loadingTask = pdfjs.getDocument(url);
-
-//     const pdf = await loadingTask.promise;
-//     let extractedText = '';
-
-//     for (let i = 1; i <= pdf.numPages; i++) {
-//       const page = await pdf.getPage(i);
-//       const content = await page.getTextContent();
-//       const pageText = content.items.map((item) => item.str).join(' ');
-//       extractedText += pageText + ' ';
-//     }
-
-//     console.log(extractedText); // Print the extracted text to the console
-//   } catch (error) {
-//     console.error('Error occurred while parsing PDF:', error);
-//   }
-// };
 
 
-// //     const handleFile1Change = (event) => {
-// //         const file = event.target.files[0];
-// //         const fileReader = new FileReader();
+//     const handleFile1Change = (event) => {
+//         const file = event.target.files[0];
+//         const fileReader = new FileReader();
 
-// //         fileReader.onload = (event) => {
-// //           const pdfData = event.target.result;
-// //           // const textContent = this.extractTextFromPDF(pdfData);
-// //           console.log(pdfData);
-// //         };
+//         fileReader.onload = (event) => {
+//           const pdfData = event.target.result;
+//           // const textContent = this.extractTextFromPDF(pdfData);
+//           console.log(pdfData);
+//         };
 
-// //         fileReader.readAsArrayBuffer(file);
+//         fileReader.readAsArrayBuffer(file);
 
         
-// //         if (file && file.type === 'application/pdf') {
-// //           setPdfFile1(file);
-// //           setValidationError('');
-// //         } else {
-// //           setPdfFile1(null);
-// //           setValidationError('Please select a PDF file for File 1.');
-// //         }
-// //       };
+//         if (file && file.type === 'application/pdf') {
+//           setPdfFile1(file);
+//           setValidationError('');
+//         } else {
+//           setPdfFile1(null);
+//           setValidationError('Please select a PDF file for File 1.');
+//         }
+//       };
     
 //       const handleFile2Change = (event) => {
 //         const file = event.target.files[0];
@@ -82,7 +59,7 @@
 //       <form onSubmit={handleSubmit}>
 //         <div>
 //           <label htmlFor="file1">File 1:</label>
-//           <input type="file" id="file1" accept="application/pdf" onChange={handleFileChange} />
+//           <input type="file" id="file1" accept="application/pdf" onChange={handleFile1Change} />
 //         </div>
 //         <div>
 //           <label htmlFor="file2">File 2:</label>
@@ -100,51 +77,74 @@
 
 
 
+
 import React, { useState } from 'react';
-import { Document } from 'pdfjs-dist/build/pdf';
 
-function PDFReader() {
-  const [file, setFile] = useState(null);
-  const [textContents, setTextContents] = useState('');
+function FileUpload() {
+  const [file1, setFile1] = useState(null);
+  const [file2, setFile2] = useState(null);
 
-  const handleFileChange = async (event) => {
+  const handleFile1Change = (event) => {
     const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+    setFile1(selectedFile);
+  };
 
-    const reader = new FileReader();
+  const handleFile2Change = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile2(selectedFile);
+  };
 
-    reader.onload = async (e) => {
-      const buffer = e.target.result;
-      const doc = await Document.load(buffer);
-      const numPages = doc.numPages;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-      let extractedText = '';
+    if (!file1 || !file2) {
+      console.log('Please select two PDF files.');
+      return;
+    }
 
-      for (let i = 1; i <= numPages; i++) {
-        const page = await doc.getPage(i);
-        const content = await page.getTextContent();
-        const pageText = content.items.map(item => item.str).join(' ');
-        extractedText += pageText + ' ';
+    const formData = new FormData();
+    formData.append('file1', file1);
+    formData.append('file2', file2);
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response) {
+        const data = await response.json();
+        console.log('Files uploaded successfully.');
+        alert('Files uploaded successfully.');
+        alert(data)
+        // Handle the response as needed
+      } else {
+        console.log('An error occurred while uploading the files.');
       }
-
-      setTextContents(extractedText);
-    };
-
-    reader.readAsArrayBuffer(selectedFile);
+    } catch (error) {
+      console.log('An error occurred:', error);
+    }
   };
 
   return (
     <div>
-      <input type="file" accept=".pdf" onChange={handleFileChange} />
-
-      {textContents && (
+      <form onSubmit={handleSubmit}>
         <div>
-          <h2>PDF Contents:</h2>
-          <p>{textContents}</p>
+          <label htmlFor="file1">File 1:</label>
+          <input type="file" id="file1" accept=".pdf" onChange={handleFile1Change} />
         </div>
-      )}
+
+        <div>
+          <label htmlFor="file2">File 2:</label>
+          <input type="file" id="file2" accept=".pdf" onChange={handleFile2Change} />
+        </div>
+
+        <button type="submit">Upload Files</button>
+      </form>
     </div>
   );
 }
 
-export default PDFReader;
+export default FileUpload;
+
+
