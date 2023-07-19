@@ -23,6 +23,7 @@ def upload_files():
     text_contents = extract_text_from_pdfs(file1, file2)
     ls.append(text_contents)
     # return text_contents
+    print(ls)
     return make_response(jsonify("s"), 200)
 
 def extract_text_from_pdfs(file1, file2):
