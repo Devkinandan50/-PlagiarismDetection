@@ -79,8 +79,7 @@
 
 
 import React, { useState } from 'react';
-// const baseUrl = process.env.REACT_APP_BASE_URL;
-const baseUrl = "http://127.0.0.1:5000/upload"
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function FileUpload() {
   const [file1, setFile1] = useState(null);
