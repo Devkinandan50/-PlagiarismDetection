@@ -2,8 +2,8 @@ from pdfinfo import extract_text_from_pdfs
 
 
 def pdfData(file1, file2):
-    pdf_text1, filesize1, no_of_pages1, no_of_word1, font_information1, page_layout_and_format1, author1, creator1, producer1, subject1, title1 = extract_text_from_pdfs(file1)
-    pdf_text2, filesize2, no_of_pages2, no_of_word2, font_information2, page_layout_and_format2, author2, creator2, producer2, subject2, title2 = extract_text_from_pdfs(file2)
+    filesize1, no_of_pages1, no_of_word1, font_information1, page_layout_and_format1, author1, creator1, producer1, subject1, title1 = extract_text_from_pdfs(file1)
+    filesize2, no_of_pages2, no_of_word2, font_information2, page_layout_and_format2, author2, creator2, producer2, subject2, title2 = extract_text_from_pdfs(file2)
 
     diffrence_between_pdf_data = []
 
@@ -78,4 +78,4 @@ def pdfData(file1, file2):
     })
 
 
-    return pdf_text1, pdf_text2, diffrence_between_pdf_data
+    return diffrence_between_pdf_data
