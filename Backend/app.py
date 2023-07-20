@@ -2,7 +2,8 @@ import PyPDF2
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 from preprocessing import preprocessing_using_nlp, my_variable
-from pdfinfo import extract_text_from_pdfs
+from collectPdfData import pdfData
+
 
 
 app = Flask(__name__)
@@ -33,19 +34,18 @@ def upload_files():
     
     if file2 is None or file2.mimetype != 'application/pdf':
         return make_response(jsonify("Please select a valid PDF file2"), 400)
-
-    text_contents1, author1, creation_date1, update_date1  = extract_text_from_pdfs(file1)
-    text_contents2, author2, creation_date2, update_date2 = extract_text_from_pdfs(file2)
-
-   
-
     
-    # ls["file1"] = text_contents1
-    # ls["file2"] = text_contents1
-    
-    # print( preprocessing_using_nlp(text_contents1, text_contents2))
-    # print(my_variable)
 
+    pdf_text1, pdf_text2, diffrence_between_pdf_data = pdfData(file1, file2)
+    
+    
+    
+    score = preprocessing_using_nlp(pdf_text1, pdf_text2)
+    # score = my_variable
+    
+    ls["score"] = score
+    ls["all data"] = diffrence_between_pdf_data
+    
 
 
     ls["success"] = True
