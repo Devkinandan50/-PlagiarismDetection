@@ -36,14 +36,14 @@ def upload_files():
         return make_response(jsonify("Please select a valid PDF file2"), 400)
     
 
-    pdf_text1, pdf_text2, diffrence_between_pdf_data = pdfData(file1, file2)
+    diffrence_between_pdf_data = pdfData(file1, file2)
     
     
     
-    score = preprocessing_using_nlp(pdf_text1, pdf_text2)
+    # score = preprocessing_using_nlp(pdf_text1, pdf_text2)
     # score = my_variable
     
-    ls["score"] = score
+    # ls["score"] = score
     ls["all data"] = diffrence_between_pdf_data
     
 
