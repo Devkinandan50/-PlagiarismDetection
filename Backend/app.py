@@ -1,9 +1,7 @@
 import PyPDF2
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
-from collectPdfData import pdfData
-
-
+from Plagiarism import pdfData
 
 app = Flask(__name__)
 CORS(app)
@@ -38,7 +36,7 @@ def upload_files():
     diffrence_between_pdf_data = pdfData(file1, file2)
     
     # ls["score"] = score
-    ls["all data"] = diffrence_between_pdf_data
+    ls["data"] = diffrence_between_pdf_data
     
 
 

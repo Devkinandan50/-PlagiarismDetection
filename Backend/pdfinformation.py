@@ -112,7 +112,6 @@ def preprocess_text(text):
     # lemmat_text = stem_text(words)
 
     # convert to string
-    # processed_text = ' '.join(lemmat_text_list)
     return lemmat_text_list
 
 

@@ -1,4 +1,4 @@
-from pdfinfo import extract_text_from_pdfs
+from pdfinformation import extract_text_from_pdfs
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
