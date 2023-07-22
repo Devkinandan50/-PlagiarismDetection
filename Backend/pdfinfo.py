@@ -1,10 +1,14 @@
 import PyPDF2
 import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+
+nltk.download('stopwords')
 
 # def get_font_information(file):
 #     font_info = {}
-
-    
 #     pdf_reader = PyPDF2.PdfFileReader(file)
 #     for page_number in range(pdf_reader.getNumPages()):
 #         page = pdf_reader.getPage(page_number)
@@ -15,8 +19,8 @@ import re
 #             if font_name not in font_info:
 #                 font_info[font_name] = set()
 #             font_info[font_name].add(font_size)
-
 #     return font_info
+
 
 
 
@@ -44,8 +48,10 @@ import re
 #             }
 
 #             page_info.append(page_data)
-
 #     return page_info
+
+
+
 
 # def get_file_size(file_object):
 #     try:
@@ -67,9 +73,48 @@ import re
 
 
 
+
 def count_words_using_regex(text):
     words = re.findall(r'\b\w+\b', text)
     return len(words)
+
+
+
+def stem_text(f_words):
+    stemmer = PorterStemmer()
+    stemmed_words = [stemmer.stem(word) for word in f_words]
+    return stemmed_words
+
+
+def lemmatize_text(f_words):
+    lemmatizer = WordNetLemmatizer()
+    lemmatized_words = [lemmatizer.lemmatize(word) for word in f_words]
+    return lemmatized_words
+
+
+
+def preprocess_text(text):
+    # Convert text to lowercase
+    text = text.lower()
+
+    # Remove special characters and numbers
+    text = re.sub(r'[^a-zA-Z\s]', '', text)
+
+    # Tokenize text into words
+    words = nltk.word_tokenize(text)
+
+    # Remove stopwords
+    stop_words = set(stopwords.words('english'))
+    words = [word for word in words if word not in stop_words]
+
+    # Lemmatization and stem
+    lemmat_text_list = lemmatize_text(words)
+    # lemmat_text = stem_text(words)
+
+    # convert to string
+    # processed_text = ' '.join(lemmat_text_list)
+    return lemmat_text_list
+
 
 
 
@@ -89,8 +134,9 @@ def extract_text_from_pdfs(file):
     
     meta = pdf_reader.metadata
     no_of_pages = len(pdf_reader.pages)
-
-    return filesize, no_of_pages, no_of_word, font_information, page_layout_and_format, meta.author, meta.creator, meta.producer, meta.subject, meta.title
+    preprocess_text_list = preprocess_text(pdf_text)
+    
+    return preprocess_text_list, filesize, no_of_pages, no_of_word, font_information, page_layout_and_format, meta.author, meta.creator, meta.producer, meta.subject, meta.title
 
 
 

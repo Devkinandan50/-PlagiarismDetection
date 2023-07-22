@@ -1,7 +1,6 @@
 import PyPDF2
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
-from preprocessing import preprocessing_using_nlp, my_variable
 from collectPdfData import pdfData
 
 
@@ -37,11 +36,6 @@ def upload_files():
     
 
     diffrence_between_pdf_data = pdfData(file1, file2)
-    
-    
-    
-    # score = preprocessing_using_nlp(pdf_text1, pdf_text2)
-    # score = my_variable
     
     # ls["score"] = score
     ls["all data"] = diffrence_between_pdf_data
