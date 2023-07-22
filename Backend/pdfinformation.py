@@ -134,8 +134,10 @@ def extract_text_from_pdfs(file):
     meta = pdf_reader.metadata
     no_of_pages = len(pdf_reader.pages)
     preprocess_text_list = preprocess_text(pdf_text)
+
+    ls = [preprocess_text_list, filesize, no_of_pages, no_of_word, font_information, page_layout_and_format, meta.author, meta.creator, meta.producer, meta.subject, meta.title]
     
-    return preprocess_text_list, filesize, no_of_pages, no_of_word, font_information, page_layout_and_format, meta.author, meta.creator, meta.producer, meta.subject, meta.title
+    return ls
 
 
 

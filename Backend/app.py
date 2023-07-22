@@ -33,10 +33,12 @@ def upload_files():
         return make_response(jsonify("Please select a valid PDF file2"), 400)
     
 
-    diffrence_between_pdf_data = pdfData(file1, file2)
+    diffrence_between_pdf_data, score1, score2, common_words_and_weights = pdfData(file1, file2)
     
-    # ls["score"] = score
+    ls["Cosine Score"] = score1
+    ls["jaccard Score"] = score2
     ls["data"] = diffrence_between_pdf_data
+    ls["common words"] = common_words_and_weights
     
 
 

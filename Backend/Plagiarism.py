@@ -30,6 +30,11 @@ def Cosine_similarity(text_list1, text_list2):
     return cosine_sim, common_words_and_weights
 
 
+def campare(x, y):
+    if x is None or y is None or x == "-" or y == "-":
+        return False
+
+    return x == y
 
 def jaccard_similarity(text_list1, text_list2):
     # convert list to set
@@ -51,87 +56,25 @@ def jaccard_similarity(text_list1, text_list2):
 
 
 def pdfData(file1, file2):
-    preprocess_text_list1, filesize1, no_of_pages1, no_of_word1, font_information1, page_layout_and_format1, author1, creator1, producer1, subject1, title1 = extract_text_from_pdfs(file1)
-    preprocess_text_list2, filesize2, no_of_pages2, no_of_word2, font_information2, page_layout_and_format2, author2, creator2, producer2, subject2, title2 = extract_text_from_pdfs(file2)
+    # list all element of which get from extract_text_from_pdfs
+    name = ["List of preprocess text", "File Size", "Number of Pages", "Number of word","Font Information", "Page Layout and Format", "Author", "Creator", "Producer", "Subject", "Title"]
+    ls1 = extract_text_from_pdfs(file1)
+    ls2 = extract_text_from_pdfs(file2)
 
     diffrence_between_pdf_data = []
 
-    score1, common_words_and_weights = Cosine_similarity(preprocess_text_list1, preprocess_text_list2)
-    score2 = jaccard_similarity(preprocess_text_list1, preprocess_text_list2)
-    
-    print(score1)
-    print(score2)
-    print(common_words_and_weights)
-
-    diffrence_between_pdf_data.append({
-        "name": "File Size",
-        "val1": filesize1,
-        "val2": filesize2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Number of Pages",
-        "val1": no_of_pages1,
-        "val2": no_of_pages2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Number of word",
-        "val1": no_of_word1,
-        "val2": no_of_word2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Font Information",
-        "val1": font_information1,
-        "val2": font_information2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Page Layout and Format",
-        "val1": page_layout_and_format1,
-        "val2": page_layout_and_format2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Author",
-        "val1": author1,
-        "val2": author2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Creator",
-        "val1": creator1,
-        "val2": creator2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Producer",
-        "val1": producer1,
-        "val2": producer2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Subject",
-        "val1": subject1,
-        "val2": subject2,
-        "val3": "0"
-    })
-
-    diffrence_between_pdf_data.append({
-        "name": "Title",
-        "val1": title1,
-        "val2": title2,
-        "val3": "0"
-    })
+    score1, common_words_and_weights = Cosine_similarity(ls1[0], ls2[0])
+    score2 = jaccard_similarity(ls1[0], ls2[0])
 
 
-    return diffrence_between_pdf_data
+    for i in range(1, len(ls2)):
+        result = campare(ls1[i], ls2[i])
+        diffrence_between_pdf_data.append({
+            "name": name[i],
+            "val1": ls1[i],
+            "val2": ls2[i],
+            "val3": result
+        })
+
+
+    return diffrence_between_pdf_data, score1, score2, common_words_and_weights
