@@ -1,3 +1,4 @@
+import numpy as np
 from pdfinformation import extract_text_from_pdfs
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -16,7 +17,17 @@ def Cosine_similarity(text_list1, text_list2):
 
     # Calculate cosine similarity between the two documents
     cosine_sim = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1])[0][0]
-    return cosine_sim
+
+    # Get feature names (words)
+    feature_names = tfidf_vectorizer.get_feature_names_out()
+
+    # Get the indices of the top features (words) based on their weights in the vectors
+    top_feature_indices = tfidf_matrix[0].indices[np.argsort(tfidf_matrix[0].data)[-10:]]
+
+    # Get the common words and their corresponding weights
+    common_words_and_weights = {feature_names[idx]: tfidf_matrix[0, idx] for idx in top_feature_indices}
+
+    return cosine_sim, common_words_and_weights
 
 
 
@@ -26,7 +37,8 @@ def jaccard_similarity(text_list1, text_list2):
     set2 = set(text_list2)
 
     # Calculate the intersection and union of the two sets
-    intersection = len(set1.intersection(set2))
+    common_words = set1.intersection(set2)
+    intersection = len(common_words)
     union = len(set1.union(set2))
     
     # Calculate Jaccard similarity
@@ -44,11 +56,12 @@ def pdfData(file1, file2):
 
     diffrence_between_pdf_data = []
 
-    score1 = Cosine_similarity(preprocess_text_list1, preprocess_text_list2)
+    score1, common_words_and_weights = Cosine_similarity(preprocess_text_list1, preprocess_text_list2)
     score2 = jaccard_similarity(preprocess_text_list1, preprocess_text_list2)
     
     print(score1)
     print(score2)
+    print(common_words_and_weights)
 
     diffrence_between_pdf_data.append({
         "name": "File Size",
