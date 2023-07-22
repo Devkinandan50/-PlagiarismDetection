@@ -20,7 +20,7 @@
 
 //         fileReader.readAsArrayBuffer(file);
 
-        
+
 //         if (file && file.type === 'application/pdf') {
 //           setPdfFile1(file);
 //           setValidationError('');
@@ -29,7 +29,7 @@
 //           setValidationError('Please select a PDF file for File 1.');
 //         }
 //       };
-    
+
 //       const handleFile2Change = (event) => {
 //         const file = event.target.files[0];
 //         if (file && file.type === 'application/pdf') {
@@ -40,7 +40,7 @@
 //           setValidationError('Please select a PDF file for File 2.');
 //         }
 //       };
-    
+
 //       const handleSubmit = (event) => {
 //         event.preventDefault();
 //         if (pdfFile1 && pdfFile2) {
@@ -76,8 +76,10 @@
 
 
 
-
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -122,6 +124,7 @@ function FileUpload() {
         console.log('Files uploaded successfully.');
         alert('Files uploaded successfully.');
         alert(data)
+        console.log(data)
         // Handle the response as needed
       } else {
         console.log('An error occurred while uploading the files.');
@@ -132,21 +135,31 @@ function FileUpload() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="file1">File 1:</label>
-          <input type="file" id="file1" accept=".pdf" onChange={handleFile1Change} />
-        </div>
+    <Container>
+      <Row>
+        <Col>
+          <div>
+            <form onSubmit={handleSubmit}>
+              
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Default file input example</Form.Label>
+                <Form.Control type="file" id="file1" accept=".pdf" onChange={handleFile1Change} />
+              </Form.Group>
 
-        <div>
-          <label htmlFor="file2">File 2:</label>
-          <input type="file" id="file2" accept=".pdf" onChange={handleFile2Change} />
-        </div>
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Default file input example</Form.Label>
+                <Form.Control type="file" id="file2" accept=".pdf" onChange={handleFile2Change} />
+              </Form.Group>
 
-        <button type="submit">Upload Files</button>
-      </form>
-    </div>
+              <button type="submit">Upload Files</button>
+            </form>
+          </div>
+        </Col>
+        <Col>2 of 2</Col>
+      </Row>
+    </Container>
+
+
   );
 }
 
