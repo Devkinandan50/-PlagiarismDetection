@@ -7,6 +7,7 @@ from nltk.stem import WordNetLemmatizer
 
 nltk.download('stopwords')
 nltk.download('punkt')
+nltk.download('wordnet')
 
 # def get_font_information(file):
 #     font_info = {}
