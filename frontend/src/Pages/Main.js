@@ -22,9 +22,9 @@ function FileUpload() {
 
 
   const handleSubmit = async (event) => {
-    setloader(true);
+    setdata(null)
     event.preventDefault();
-
+    
     if (file1 === null || !(file1.type === 'application/pdf')) {
       alert('Please select two PDF files1.');
       return;
@@ -33,7 +33,8 @@ function FileUpload() {
       alert('Please select two PDF files2.');
       return;
     }
-
+    
+    setloader(true);
     const formData = new FormData();
     formData.append('file1', file1);
     formData.append('file2', file2);
