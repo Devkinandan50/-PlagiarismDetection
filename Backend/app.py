@@ -1,4 +1,3 @@
-import PyPDF2
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 from Plagiarism import pdfData
