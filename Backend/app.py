@@ -41,7 +41,7 @@ def upload_files():
     
 
 
-    ls["success"] = True
+    ls["success"] = "True"
     return make_response(jsonify(ls), 200)
 
 

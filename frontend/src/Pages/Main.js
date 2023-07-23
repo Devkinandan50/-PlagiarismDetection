@@ -26,7 +26,7 @@ function FileUpload() {
   const handleSubmit = async (event) => {
     setdata(null)
     event.preventDefault();
-    
+
     if (file1 === null || !(file1.type === 'application/pdf')) {
       alert('Please select two PDF files1.');
       return;
@@ -35,7 +35,7 @@ function FileUpload() {
       alert('Please select two PDF files2.');
       return;
     }
-    
+
     setloader(true);
     const formData = new FormData();
     formData.append('file1', file1);
@@ -95,17 +95,28 @@ function FileUpload() {
 
 
         <div class="col-lg-7 mb-lg-0 mb-4">
-          <h4 className='text-center'> Result</h4>
+          <h4 className='text-center'>Plagiarism Result</h4>
           <hr class="my-2"></hr>
 
           {data ? (
             <div>
-              <h2>Plagiarism Result:</h2>
               {/* <p><strong>Cosine Score:</strong> {data['Cosine Score']}</p> */}
-              <p><strong>Jaccard Score:</strong> {data['jaccard Score']}</p>
-              <div style={{ width: 150, marginLeft: 50}}>
-              <CircularProgressbar value={data['jaccard Score'] * 100} text={`${data['jaccard Score'] * 100}%`} />
+              {/* <p><strong>Jaccard Score:</strong> {data['jaccard Score']}</p> */}
+
+              <div class="row m-3">
+                <div class="col-sm-4">
+                  <div style={{ width: 100 }}>
+                    <CircularProgressbar value={(data['jaccard Score'] * 100).toFixed(1)} text={`${(data['jaccard Score'] * 100).toFixed(1)}%`} />
+                  </div>
                 </div>
+                <div class="col-sm-8">
+                  <div class={(data['jaccard Score'] * 100) > 70 ? ("alert alert-danger") : ("alert alert-success")} role="alert">
+                    This is a success alert—check it out! <p><strong>{data['success']}</strong> </p>
+                  </div>
+                </div>
+              </div>
+
+
 
               {/* <h3>Common Words:</h3>
             <ul>
@@ -114,19 +125,18 @@ function FileUpload() {
               ))}
             </ul> */}
 
-              <h3>Data:</h3>
-              <table>
-                <thead>
+              <table class="table">
+                <thead class="thead-dark">
                   <tr>
-                    <th>Name</th>
-                    <th>Value1</th>
-                    <th>Value2</th>
-                    <th>Value3</th>
+                    <th scope="col">Parameter</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data['data'].map((item, index) => (
-                    <tr key={index}>
+                    <tr class={item.val3 ? ("table-danger"): ("table-light")} key={index}>
                       <td>{item.name}</td>
                       <td>{item.val1}</td>
                       <td>{item.val2}</td>
