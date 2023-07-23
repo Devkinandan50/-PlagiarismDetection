@@ -6,6 +6,7 @@ from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 
 nltk.download('stopwords')
+nltk.download('punkt')
 
 # def get_font_information(file):
 #     font_info = {}
