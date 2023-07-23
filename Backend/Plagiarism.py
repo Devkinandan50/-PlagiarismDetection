@@ -1,33 +1,33 @@
-import numpy as np
+# import numpy as np
 from pdfinformation import extract_text_from_pdfs
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+# from sklearn.feature_extraction.text import TfidfVectorizer
+# from sklearn.metrics.pairwise import cosine_similarity
 
 
-def Cosine_similarity(text_list1, text_list2):
-    # convert to string
-    preprocessed_text1 = ' '.join(text_list1)
-    preprocessed_text2 = ' '.join(text_list2)
+# def Cosine_similarity(text_list1, text_list2):
+#     # convert to string
+#     preprocessed_text1 = ' '.join(text_list1)
+#     preprocessed_text2 = ' '.join(text_list2)
 
-    # Create a TfidfVectorizer instance
-    tfidf_vectorizer = TfidfVectorizer()
+#     # Create a TfidfVectorizer instance
+#     tfidf_vectorizer = TfidfVectorizer()
 
-    # Fit and transform the preprocessed texts using TfidfVectorizer
-    tfidf_matrix = tfidf_vectorizer.fit_transform([preprocessed_text1, preprocessed_text2])
+#     # Fit and transform the preprocessed texts using TfidfVectorizer
+#     tfidf_matrix = tfidf_vectorizer.fit_transform([preprocessed_text1, preprocessed_text2])
 
-    # Calculate cosine similarity between the two documents
-    cosine_sim = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1])[0][0]
+#     # Calculate cosine similarity between the two documents
+#     cosine_sim = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1])[0][0]
 
-    # Get feature names (words)
-    feature_names = tfidf_vectorizer.get_feature_names_out()
+#     # Get feature names (words)
+#     feature_names = tfidf_vectorizer.get_feature_names_out()
 
-    # Get the indices of the top features (words) based on their weights in the vectors
-    top_feature_indices = tfidf_matrix[0].indices[np.argsort(tfidf_matrix[0].data)[-10:]]
+#     # Get the indices of the top features (words) based on their weights in the vectors
+#     top_feature_indices = tfidf_matrix[0].indices[np.argsort(tfidf_matrix[0].data)[-10:]]
 
-    # Get the common words and their corresponding weights
-    common_words_and_weights = {feature_names[idx]: tfidf_matrix[0, idx] for idx in top_feature_indices}
+#     # Get the common words and their corresponding weights
+#     common_words_and_weights = {feature_names[idx]: tfidf_matrix[0, idx] for idx in top_feature_indices}
 
-    return cosine_sim, common_words_and_weights
+#     return cosine_sim, common_words_and_weights
 
 
 def campare(x, y):
@@ -63,7 +63,9 @@ def pdfData(file1, file2):
 
     diffrence_between_pdf_data = []
 
-    score1, common_words_and_weights = Cosine_similarity(ls1[0], ls2[0])
+    # score1, common_words_and_weights = Cosine_similarity(ls1[0], ls2[0])
+    score1 = 0
+    common_words_and_weights = 0
     score2 = jaccard_similarity(ls1[0], ls2[0])
 
 
