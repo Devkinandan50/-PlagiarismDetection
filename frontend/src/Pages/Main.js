@@ -1,5 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import Result from '../components/Result';
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -99,8 +101,11 @@ function FileUpload() {
           {data ? (
             <div>
               <h2>Plagiarism Result:</h2>
-              <p><strong>Cosine Score:</strong> {data['Cosine Score']}</p>
+              {/* <p><strong>Cosine Score:</strong> {data['Cosine Score']}</p> */}
               <p><strong>Jaccard Score:</strong> {data['jaccard Score']}</p>
+              <div style={{ width: 150, marginLeft: 50}}>
+              <CircularProgressbar value={data['jaccard Score'] * 100} text={`${data['jaccard Score'] * 100}%`} />
+                </div>
 
               {/* <h3>Common Words:</h3>
             <ul>
