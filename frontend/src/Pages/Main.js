@@ -78,7 +78,7 @@ function FileUpload() {
     <>
       <ToastContainer />
       <div class="row mt-5">
-        <div class="col-lg-5" style={{ height: 600, borderRight: `4px double ${color}` }}>
+        <div class="col-lg-5" style={{ height: 640, borderRight: `4px double ${color}` }}>
           <h4 className='text-center'> Upload Your PDF Here</h4>
           <hr class="my-2"></hr>
           <div className='mt-5 p-4'>
