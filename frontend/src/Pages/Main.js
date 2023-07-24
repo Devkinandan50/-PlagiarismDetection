@@ -2,7 +2,8 @@ import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import Result from '../components/Result';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function FileUpload() {
@@ -28,11 +29,18 @@ function FileUpload() {
     event.preventDefault();
 
     if (file1 === null || !(file1.type === 'application/pdf')) {
-      alert('Please select two PDF files1.');
+      // toast.success("Password are not same", {
+      //   position: "top-center"
+      // });
+      toast.error(`Please select Proper file as PDF.`, {
+        position: "top-center"
+      });
       return;
     }
     if (file2 === null || !(file2.type === 'application/pdf')) {
-      alert('Please select two PDF files2.');
+      toast.error(`Please select Proper file as PDF.`, {
+        position: "top-center"
+      });
       return;
     }
 
@@ -61,7 +69,7 @@ function FileUpload() {
 
   return (
     <>
-
+<ToastContainer />
       <div class="row mt-5">
         <div class="col-lg-5" style={{ height: 600, borderRight: "2px double green" }}>
           <h4 className='text-center'> Upload Your PDF Here</h4>
@@ -110,9 +118,18 @@ function FileUpload() {
                   </div>
                 </div>
                 <div class="col-sm-8">
-                  <div class={(data['jaccard Score'] * 100) > 70 ? ("alert alert-danger") : ("alert alert-success")} role="alert">
-                    This is a success alert—check it out! <p><strong>{data['success']}</strong> </p>
-                  </div>
+                  {(data['jaccard Score'] * 100) > 70 ? (
+                    <div class="alert alert-danger" role="alert">
+                      <p><strong>Plagiarism Detected!!!</strong></p>
+                      The text in both files exhibits a striking similarity, with a match percentage of {(data['jaccard Score'] * 100).toFixed(1)} %.
+                    </div>
+                  ) : (
+                    <div class="alert alert-success" role="alert">
+                      <p><strong>Originality Confirmed!!! </strong> </p>
+                      The textual content in both files is dissimilar.
+                    </div>
+                  )}
+
                 </div>
               </div>
 
@@ -125,22 +142,21 @@ function FileUpload() {
               ))}
             </ul> */}
 
-              <table class="table">
+              <table class="table table-bordered table-hover table-dark m-3 text-center">
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">Parameter</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">{file1.name}</th>
+                    <th scope="col">{file2.name}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data['data'].map((item, index) => (
-                    <tr class={item.val3 ? ("table-danger"): ("table-light")} key={index}>
+                    // <tr class={item.val3 ? ("table-danger"): ("table-success")} key={index}>
+                    <tr class="table-light" key={index}>
                       <td>{item.name}</td>
                       <td>{item.val1}</td>
                       <td>{item.val2}</td>
-                      <td>{item.val3.toString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -155,13 +171,16 @@ function FileUpload() {
                   </div>
                 </div>
               ) : (
-                <p>upload pdf to see result</p>
+                <div class="d-flex justify-content-center m-5">
+
+                  <p>upload pdf to see result</p>
+                </div>
               )}
             </>
           )}
         </div>
-
       </div>
+        
 
     </>
   );
