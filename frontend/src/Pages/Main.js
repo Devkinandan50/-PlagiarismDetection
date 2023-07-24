@@ -11,6 +11,7 @@ function FileUpload() {
   const [file2, setFile2] = useState(null);
   const [loader, setloader] = useState(false);
   const [data, setdata] = useState(null);
+  const [color, setcolor] = useState("Black");
 
 
   const handleFile1Change = (event) => {
@@ -58,6 +59,12 @@ function FileUpload() {
       if (response) {
         const data = await response.json();
         setdata(data)
+        if ((data['jaccard Score'] * 100) > 70) {
+          setcolor("red")
+        }
+        else {
+          setcolor("green")
+        }
       } else {
         console.log('An error occurred while uploading the files.');
       }
@@ -69,9 +76,9 @@ function FileUpload() {
 
   return (
     <>
-<ToastContainer />
+      <ToastContainer />
       <div class="row mt-5">
-        <div class="col-lg-5" style={{ height: 600, borderRight: "2px double green" }}>
+        <div class="col-lg-5" style={{ height: 600, borderRight: `4px double ${color}` }}>
           <h4 className='text-center'> Upload Your PDF Here</h4>
           <hr class="my-2"></hr>
           <div className='mt-5 p-4'>
@@ -102,7 +109,7 @@ function FileUpload() {
 
 
 
-        <div class="col-lg-7 mb-lg-0 mb-4">
+        <div class="col-lg-7 mb-lg-0 mb-4" >
           <h4 className='text-center'>Plagiarism Result</h4>
           <hr class="my-2"></hr>
 
@@ -110,7 +117,6 @@ function FileUpload() {
             <div>
               {/* <p><strong>Cosine Score:</strong> {data['Cosine Score']}</p> */}
               {/* <p><strong>Jaccard Score:</strong> {data['jaccard Score']}</p> */}
-
               <div class="row m-3">
                 <div class="col-sm-4">
                   <div style={{ width: 100 }}>
@@ -119,15 +125,19 @@ function FileUpload() {
                 </div>
                 <div class="col-sm-8">
                   {(data['jaccard Score'] * 100) > 70 ? (
-                    <div class="alert alert-danger" role="alert">
-                      <p><strong>Plagiarism Detected!!!</strong></p>
-                      The text in both files exhibits a striking similarity, with a match percentage of {(data['jaccard Score'] * 100).toFixed(1)} %.
-                    </div>
+                    <>
+                      <div class="alert alert-danger" role="alert">
+                        <p><strong>Plagiarism Detected!!!</strong></p>
+                        The text in both files exhibits a striking similarity, with a match percentage of {(data['jaccard Score'] * 100).toFixed(1)} %.
+                      </div>
+                    </>
                   ) : (
-                    <div class="alert alert-success" role="alert">
-                      <p><strong>Originality Confirmed!!! </strong> </p>
-                      The textual content in both files is dissimilar.
-                    </div>
+                    <>
+                      <div class="alert alert-success" role="alert">
+                        <p><strong>Originality Confirmed!!! </strong> </p>
+                        The textual content in both files is dissimilar.
+                      </div>
+                    </>
                   )}
 
                 </div>
@@ -151,12 +161,17 @@ function FileUpload() {
                   </tr>
                 </thead>
                 <tbody>
+                  <tr class="table-light">
+                    <td>File Size</td>
+                    <td>{(file1.size / 1024).toFixed(1)} KB</td>
+                    <td>{(file2.size / 1024).toFixed(1)} KB</td>
+                  </tr>
                   {data['data'].map((item, index) => (
                     // <tr class={item.val3 ? ("table-danger"): ("table-success")} key={index}>
                     <tr class="table-light" key={index}>
                       <td>{item.name}</td>
-                      <td>{item.val1}</td>
-                      <td>{item.val2}</td>
+                      <td>{item.val1 ? (item.val1) : ("-")}</td>
+                      <td>{item.val2 ? (item.val2) : ("-")}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -180,7 +195,7 @@ function FileUpload() {
           )}
         </div>
       </div>
-        
+
 
     </>
   );

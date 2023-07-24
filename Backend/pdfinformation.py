@@ -122,7 +122,6 @@ def preprocess_text(text):
 def extract_text_from_pdfs(file):
     pdf_text = ''
     no_of_word = 0
-    filesize = "-"
     font_information = "-"
     page_layout_and_format = "-"
     ai_score = 0
@@ -137,7 +136,7 @@ def extract_text_from_pdfs(file):
     no_of_pages = len(pdf_reader.pages)
     preprocess_text_list = preprocess_text(pdf_text)
 
-    ls = [preprocess_text_list, filesize, no_of_pages, no_of_word, font_information, page_layout_and_format, meta.author, meta.creator, meta.producer, meta.subject, meta.title]
+    ls = [preprocess_text_list, no_of_pages, no_of_word, font_information, page_layout_and_format, meta.author, meta.creator, meta.producer, meta.subject, meta.title]
     
     return ls
 

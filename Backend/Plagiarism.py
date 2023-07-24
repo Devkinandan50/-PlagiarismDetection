@@ -57,7 +57,7 @@ def jaccard_similarity(text_list1, text_list2):
 
 def pdfData(file1, file2):
     # list all element of which get from extract_text_from_pdfs
-    name = ["List of preprocess text", "File Size", "Number of Pages", "Number of word","Font Information", "Page Layout and Format", "Author", "Creator", "Producer", "Subject", "Title"]
+    name = ["List of preprocess text", "Number of Pages", "Number of word","Font Information", "Page Layout and Format", "Author", "Creator", "Producer", "Subject", "Title"]
     ls1 = extract_text_from_pdfs(file1)
     ls2 = extract_text_from_pdfs(file2)
 
