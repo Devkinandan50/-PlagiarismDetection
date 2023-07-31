@@ -32,14 +32,14 @@ const Navbar = () => {
                             </li>
                             <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === "/howitsworks" ? "active" : ""}`} to="/howitsworks">How its Works</Link>
-                            </li> */}
+                            </li> 
                             <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === "/main" ? "active" : ""}`} to="/main">Main</Link>
-                            </li>
+                            </li> */}
 
                         </ul>
                         <form className="d-flex">
-                                    <Link className="btn btn-primary mx-1" to="/main" role="button">Get Started</Link>
+                                    <Link className="btn btn-primary mx-1" to="/" role="button">Get Started</Link>
                                     {/* <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link> */}
                         </form> 
                     </div>
