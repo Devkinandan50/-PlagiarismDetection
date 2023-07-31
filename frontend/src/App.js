@@ -20,10 +20,10 @@ function App() {
             <div className="container">
               <Switch>
                 <Route exact path="/">
-                  <Home />
+                   <Main />
                 </Route>
                 <Route exact path="/main">
-                  <Main />
+                   <Home />
                 </Route>
               </Switch>
             </div>
