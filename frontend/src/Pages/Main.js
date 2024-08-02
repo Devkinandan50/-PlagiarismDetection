@@ -24,6 +24,20 @@ function FileUpload() {
     setFile2(selectedFile);
   };
 
+  const runOnRender = async() => {
+    const formData = new FormData();
+    const response = await fetch(baseUrl + "/upload", {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await response.json();
+  };
+
+  useEffect(() => {
+    runOnRender();
+  }, []); 
+
+
 
   const handleSubmit = async (event) => {
     setdata(null)
